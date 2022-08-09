@@ -43,7 +43,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              body: 'Thank you for the PR!'
+              body: 'The github actions test started run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             });
   
   build:
