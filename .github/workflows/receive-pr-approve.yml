@@ -1,22 +1,22 @@
 name: Receive PR Test Approve
 
-on: 
+on:
   pull_request:
-      branches:
-        - main
-      paths:
-        - 'tiles-generation/**'
+    branches:
+      - main
+    paths:
+      - 'tiles-generation/**'
 
 jobs:
   approve:
     runs-on: ubuntu-latest
     steps:
-    - name: Approve
-      run: echo With security reasons, CDK test actions for tiles generation PR need to be approved before running.
-  
+      - name: Approve
+        run: echo With security reasons, CDK test actions for tiles generation PR need to be approved before running.
+
   upload:
     runs-on: ubuntu-latest
-    steps:        
+    steps:
       - name: Save PR number
         env:
           PR_NUMBER: ${{ github.event.number }}
