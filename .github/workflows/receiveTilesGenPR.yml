@@ -1,0 +1,15 @@
+name: Receive PR Test Approve
+
+on: 
+  pull_request:
+      branches:
+        - main
+      paths:
+        - 'tiles-generation/**'
+
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Approve
+      run: echo With security reasons, CDK test actions for tiles generation PR need to be approved before running.
