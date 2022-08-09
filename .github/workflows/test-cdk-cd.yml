@@ -1,7 +1,10 @@
 name: Test tiles generation CDK CD and ECS task run
 
 on:
-  workflow_call:
+  workflow_run:
+    workflows: ["Receive PR Test Approve"]
+    types:
+      - completed
 
 jobs:
   build:
@@ -10,6 +13,16 @@ jobs:
       ${{ github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: 'Comment on PR'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Everything is OK. Thank you for the PR!'
+            });
       - name: Checkout
         run: |
             echo 'test-cdk-cd'
