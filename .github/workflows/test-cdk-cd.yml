@@ -48,9 +48,9 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-    if: >
-      ${{ github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success' }}
+    needs: [approve]
+    environment:
+        name: Pull Request
     steps:
       - name: 'Comment on PR'
         uses: actions/github-script@v6
@@ -64,16 +64,11 @@ jobs:
               body: 'Everything is OK. Thank you for the PR!'
             });
       - name: Checkout
-        run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
-          echo '{"name":"Test Check","head_sha":"${{ github.sha }}"}' | gh api /repos/{owner}/{repo}/check-runs --input -
-
-      - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 2
-
+      
       - name: Use Node.js
         uses: actions/setup-node@v3.0.0
         with:
