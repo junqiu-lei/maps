@@ -1,10 +1,7 @@
 name: Test tiles generation CDK and ECS task run
 
 on:
-  workflow_run:
-    workflows: ["Receive PR Test Approve"]
-    types:
-      - completed
+  workflow_call:
 
 jobs:
   comment:
