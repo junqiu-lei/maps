@@ -65,15 +65,15 @@ jobs:
             });
       - name: Checkout
         run: |
-            echo 'test-cdk-cd'
-            # https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#:~:text=head_branch%2C%20and%20head_sha.-,workflow,-object
-            echo "${{ toJSON(github.event.workflow) }}"
+          echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
+          echo '{"name":"Test Check","head_sha":"${{ github.sha }}"}' | gh api /repos/{owner}/{repo}/check-runs --input -
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 2
-      
+
       - name: Use Node.js
         uses: actions/setup-node@v3.0.0
         with:
