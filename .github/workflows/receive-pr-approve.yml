@@ -13,7 +13,3 @@ jobs:
     steps:
     - name: Approve
       run: echo With security reasons, CDK test actions for tiles generation PR need to be approved before running.
-  test:
-    name: Test CDK
-    needs: approve
-    uses: junqiu-lei/maps/.github/workflows/test-cdk-cd.yml@main
